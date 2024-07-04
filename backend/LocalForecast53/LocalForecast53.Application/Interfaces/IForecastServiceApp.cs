@@ -1,10 +1,10 @@
-﻿using LocalForecast53.Application.Inputs;
-using LocalForecast53.Application.Outputs;
+﻿using LocalForecast53.Application.External;
+using LocalForecast53.Application.Inputs;
 
 namespace LocalForecast53.Application.Interfaces
 {
     public interface IForecastServiceApp
     {
-        Task<ForecastOutput> GetForecastAsync(ForecastInput forecastInput);
+        Task<OpenWeatherData> GetForecastAsync(ForecastInput forecastInput);
     }
 }
