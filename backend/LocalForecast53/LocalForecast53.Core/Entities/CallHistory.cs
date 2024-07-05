@@ -1,15 +1,18 @@
-﻿namespace LocalForecast53.Core.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace LocalForecast53.Core.Entities
 {
+    [Table("call_history")]
     public class CallHistory : BaseEntity
     {
-        public decimal Latitude { get; private set; }
-        public decimal Longitude { get; private set; }
+        public double Latitude { get; private set; }
+        public double Longitude { get; private set; }
         public DateTime CallTime { get; private set; }
         public string ResponseBody { get; private set; }  // Store as JSON string
 
         public CallHistory() {}
 
-        public CallHistory(decimal latitude, decimal longitude)
+        public CallHistory(double latitude, double longitude)
         {
             Latitude = latitude;
             Longitude = longitude;

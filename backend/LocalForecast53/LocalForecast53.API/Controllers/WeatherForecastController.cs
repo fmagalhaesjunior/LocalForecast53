@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LocalForecast53.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : AbstractController<WeatherForecastController>
     {
         private readonly ILogger<WeatherForecastController> _logger;
@@ -18,10 +18,16 @@ namespace LocalForecast53.API.Controllers
             _serviceApp = serviceApp;
         }
 
-        [HttpPost(Name = "GetWeatherForecast")]
+        [HttpGet("GetWeatherForecast")]
+        public async Task<IActionResult> Get() 
+        {
+            return Ok("Funcionando...");
+        }
+
+        [HttpPost(Name = "WeatherForecast")]
         [ProducesResponseType<OpenWeatherData>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetWeatherForecast([FromBody] ForecastInput forecastInput) =>
+        public async Task<IActionResult> WeatherForecast([FromBody] ForecastInput forecastInput) =>
             Execute(() => _serviceApp.GetForecastAsync(forecastInput));
     }
 }

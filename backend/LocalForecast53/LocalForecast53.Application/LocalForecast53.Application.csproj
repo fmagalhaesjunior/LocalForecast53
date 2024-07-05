@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LocalForecast53.Core\LocalForecast53.Core.csproj" />
+    <ProjectReference Include="..\LocalForecast53.Infra\LocalForecast53.Infra.csproj" />
     <ProjectReference Include="..\LocalForecast53.Shared\LocalForecast53.Shared.csproj" />
   </ItemGroup>
 
