@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS call_history (
     latitude DOUBLE PRECISION NOT NULL,
     longitude DOUBLE PRECISION NOT NULL,
     callTime TIMESTAMP NOT NULL,
-    responseBody JSONB NUT NULL,
+    responseBody JSONB NOT NULL,
     CONSTRAINT PK_call_history 			PRIMARY KEY(Id)
 );
