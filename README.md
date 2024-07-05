@@ -20,10 +20,14 @@ Este projeto é um sistema de previsão do tempo que faz previsões para os pró
    git clone https://github.com/fmagalhaesjunior/LocalForecast53.git
    
 2. Navegue até o diretório raiz do projeto:
-  `cd LocalForecast53`
+  ```
+   cd LocalForecast53
+  ```
 
 3. Inicie os containers Docker:
-`docker-compose up --build`
+```
+   docker-compose up --build
+```
 
 4. A aplicação estará disponível em:
    - Backend API: `http://localhost:8080`
