@@ -39,6 +39,6 @@ Este projeto é um sistema de previsão do tempo que faz previsões para os pró
    - Backend API: `http://localhost:8080`
    - Frontend: `http://localhost`
   
-5. Documentação da API
-   Em ambiente de desenvolvimento, a documentação da API pode ser consultada em `http://localhost:8080/swagger/index.html`
+5. Documentação da API:
+   - Em ambiente de desenvolvimento, a documentação da API pode ser consultada em `http://localhost:8080/swagger/index.html`
 
