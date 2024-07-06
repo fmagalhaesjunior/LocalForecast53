@@ -1,8 +1,17 @@
+using LocalForecast53.Application;
 using LocalForecast53.Application.Mapping;
 using LocalForecast53.Shared.Configuration;
-using LocalForecast53.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Add Environment Variables
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Services.Configure<ExternalApiSettings>(options =>
+{
+    options.ApiKey = Environment.GetEnvironmentVariable("EXTERNAL_API_KEY");
+    options.Url = Environment.GetEnvironmentVariable("EXTERNAL_API_URL");
+});
 
 // Add services to the container.
 builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("DatabaseConfiguration"));

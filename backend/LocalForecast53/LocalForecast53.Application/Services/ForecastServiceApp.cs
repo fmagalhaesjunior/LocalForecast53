@@ -6,7 +6,9 @@ using LocalForecast53.Application.Output;
 using LocalForecast53.Core.Entities;
 using LocalForecast53.Core.Interfaces;
 using LocalForecast53.Core.Validators;
+using LocalForecast53.Shared.Configuration;
 using LocalForecast53.Shared.Helpers;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace LocalForecast53.Application.Services
@@ -15,13 +17,13 @@ namespace LocalForecast53.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IService<CallHistory> _historyService;
-        private readonly string _baseUrl = "https://api.openweathermap.org/data/2.5";
-        private string apiKey = "bdc71902dd52b3689449314887dd0df6";
+        private readonly ExternalApiSettings _settings;
 
-        public ForecastServiceApp(IMapper mapper, IService<CallHistory> historyService)
+        public ForecastServiceApp(IMapper mapper, IService<CallHistory> historyService, IOptions<ExternalApiSettings> settings)
         {
             _mapper = mapper;
             _historyService = historyService;
+            _settings = settings.Value;
         }
 
         public Task<ForecastOutput> GetForecastAsync(ForecastInput forecastInput)
@@ -57,7 +59,7 @@ namespace LocalForecast53.Application.Services
         {
             using (var api = new APIHelper())
             {
-                string url = $"{_baseUrl}/forecast?lat={input.Latitude}&lon={input.Longitude}&appid={apiKey}&units={GetUnitString(input.Unit)}";
+                string url = $"{_settings.Url}/forecast?lat={input.Latitude}&lon={input.Longitude}&appid={_settings.ApiKey}&units={GetUnitString(input.Unit)}";
                 var result = api.GetAsync<OpenWeatherData>(url).Result;
                 return result;
             }
@@ -67,7 +69,7 @@ namespace LocalForecast53.Application.Services
         {
             using (var api = new APIHelper())
             {
-                string url = $"{_baseUrl}/weather?lat={input.Latitude}&lon={input.Longitude}&appid={apiKey}&units={GetUnitString(input.Unit)}";
+                string url = $"{_settings.Url}/weather?lat={input.Latitude}&lon={input.Longitude}&appid={_settings.ApiKey}&units={GetUnitString(input.Unit)}";
                 var result = api.GetAsync<CurrentWeather>(url).Result;
                 return result;
             }

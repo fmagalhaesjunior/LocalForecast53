@@ -22,6 +22,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=localforecast53;Username=postgres;Password=123456
+      - EXTERNAL_API_URL=https://api.openweathermap.org/data/2.5
+      - EXTERNAL_API_KEY=SUA_CHAVE_OPEN_WEATHERMAP
     ports:
       - "8080:8080"
     depends_on:
