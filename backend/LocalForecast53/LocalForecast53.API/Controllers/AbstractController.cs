@@ -14,7 +14,7 @@ namespace LocalForecast53.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Erro interno do serviço.");
+                return BadRequest(ex.Message);
             }
         }
     }
