@@ -32,7 +32,7 @@ app.UseCors(x =>
 x.AllowAnyOrigin()
 .AllowAnyMethod()
 .AllowAnyHeader()
-.WithOrigins("http://localhost:4200"));
+.WithOrigins("http://localhost"));
 
 app.UseAuthorization();
 
