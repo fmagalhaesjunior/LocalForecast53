@@ -19,7 +19,7 @@ namespace LocalForecast53.API.Controllers
             _serviceApp = serviceApp;
         }
 
-        [HttpPost(Name = "WeatherForecast")]
+        [HttpPost]
         [ProducesResponseType<ForecastOutput>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> WeatherForecast([FromBody] ForecastInput forecastInput) =>
