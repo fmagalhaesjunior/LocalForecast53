@@ -12,6 +12,12 @@ Este projeto é um sistema de previsão do tempo que faz previsões para os pró
 ### Pré-requisitos
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+- Chave da API OpenWeatherMap
+
+### Configurando a Chave da API
+1. Crie uma conta no [OpenWeatherMap](https://home.openweathermap.org/users/sign_up).
+2. Gere uma chave da API.
+3. Inclua a chave no arquivo `docker-compose.yml` como valor da variável de ambiente `EXTERNAL_API_KEY`.
 
 ### Subindo a Aplicação
 
@@ -32,3 +38,7 @@ Este projeto é um sistema de previsão do tempo que faz previsões para os pró
 4. A aplicação estará disponível em:
    - Backend API: `http://localhost:8080`
    - Frontend: `http://localhost`
+  
+5. Documentação da API:
+   - Em ambiente de desenvolvimento, a documentação da API pode ser consultada em `http://localhost:8080/swagger/index.html`
+
