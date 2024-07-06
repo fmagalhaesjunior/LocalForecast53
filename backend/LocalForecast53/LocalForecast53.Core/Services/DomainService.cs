@@ -16,17 +16,13 @@ namespace LocalForecast53.Core.Services
             _mapper = mapper;
         }
 
-        public TOutputModel Add<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)
+        public void Add<TInputModel, TValidator>(TInputModel inputModel)
             where TInputModel : class
-            where TOutputModel : class
             where TValidator : AbstractValidator<TEntity>
         {
             TEntity entity = _mapper.Map<TEntity>(inputModel);
             Validate(entity, Activator.CreateInstance<TValidator>());
             _repository.Add(entity);
-            TOutputModel outputModel = _mapper.Map<TOutputModel>(entity);
-
-            return outputModel;
         }
 
         public void Delete(object id) => _repository.Remove(id);

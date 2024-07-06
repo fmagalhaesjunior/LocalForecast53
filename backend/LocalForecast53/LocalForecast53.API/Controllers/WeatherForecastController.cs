@@ -1,6 +1,7 @@
 using LocalForecast53.Application.External;
 using LocalForecast53.Application.Inputs;
 using LocalForecast53.Application.Interfaces;
+using LocalForecast53.Application.Output;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalForecast53.API.Controllers
@@ -25,7 +26,7 @@ namespace LocalForecast53.API.Controllers
         }
 
         [HttpPost(Name = "WeatherForecast")]
-        [ProducesResponseType<OpenWeatherData>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ForecastOutput>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> WeatherForecast([FromBody] ForecastInput forecastInput) =>
             Execute(() => _serviceApp.GetForecastAsync(forecastInput));

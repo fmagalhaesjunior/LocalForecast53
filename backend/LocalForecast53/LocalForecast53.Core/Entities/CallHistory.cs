@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LocalForecast53.Core.Entities
 {
@@ -19,9 +20,9 @@ namespace LocalForecast53.Core.Entities
             this.CallTime = DateTime.UtcNow;
         }
 
-        public void SetResponseBody(string responseBody)
+        public void SetResponseBody(object responseBody)
         {
-            ResponseBody = responseBody;
+            ResponseBody = JsonConvert.SerializeObject(responseBody);
         }
     }
 }

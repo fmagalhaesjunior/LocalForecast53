@@ -5,10 +5,9 @@ namespace LocalForecast53.Core.Interfaces
 {
     public interface IService<TEntity> where TEntity : BaseEntity
     {
-        TOutputModel Add<TInputModel, TOutputModel, TValidator>(TInputModel inputModel)
+        void Add<TInputModel, TValidator>(TInputModel inputModel)
             where TValidator : AbstractValidator<TEntity>
-            where TInputModel : class
-            where TOutputModel : class;
+            where TInputModel : class;
 
         void Delete(object id);
         TOutputModel GetById<TOutputModel>(object id)

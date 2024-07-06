@@ -2,6 +2,7 @@
 using LocalForecast53.Application.External;
 using LocalForecast53.Application.Inputs;
 using LocalForecast53.Application.Interfaces;
+using LocalForecast53.Application.Output;
 using LocalForecast53.Core.Entities;
 using LocalForecast53.Core.Interfaces;
 using LocalForecast53.Core.Validators;
@@ -23,19 +24,26 @@ namespace LocalForecast53.Application.Services
             _historyService = historyService;
         }
 
-        public Task<OpenWeatherData> GetForecastAsync(ForecastInput forecastInput)
+        public Task<ForecastOutput> GetForecastAsync(ForecastInput forecastInput)
         {
-            //1. Obter retorno da API externa (OpenWeather)
-            var history = CallForecast(forecastInput);
+            //1. Obter retornos da API externa (OpenWeather)
+            var currentWeather = CallWeather(forecastInput);
+            var data = CallForecast(forecastInput);
 
             //2. Mapear retorno com Output
-            var output = JsonConvert.DeserializeObject<OpenWeatherData>(history.ResponseBody);
+            ForecastOutput forecastOutput = new ForecastOutput
+            {
+                Current = currentWeather,
+                DataList = data
+            };
 
             //3. Persistir os dados no banco
-            _historyService.Add<CallHistory, Object, CallHistoryValidator>(history);
+            var history = _mapper.Map<CallHistory>(forecastInput);
+            history.SetResponseBody(forecastOutput);
+            //_historyService.Add<CallHistory, CallHistoryValidator>(history);
 
             //4. Retornar Output
-            return Task.FromResult(output);
+            return Task.FromResult(forecastOutput);
         }
 
         private string GetUnitString(Units units) => units switch
@@ -45,15 +53,23 @@ namespace LocalForecast53.Application.Services
             _ => throw new ArgumentOutOfRangeException(nameof(units), units, null)
         };
 
-        private CallHistory CallForecast(ForecastInput input)
+        private OpenWeatherData CallForecast(ForecastInput input)
         {
             using (var api = new APIHelper())
             {
                 string url = $"{_baseUrl}/forecast?lat={input.Latitude}&lon={input.Longitude}&appid={apiKey}&units={GetUnitString(input.Unit)}";
-                var result = api.GetAsync<string>(url);
-                var history = _mapper.Map<CallHistory>(input);
-                history.SetResponseBody(result.Result);
-                return history;
+                var result = api.GetAsync<OpenWeatherData>(url).Result;
+                return result;
+            }
+        }
+
+        private CurrentWeather CallWeather(ForecastInput input)
+        {
+            using (var api = new APIHelper())
+            {
+                string url = $"{_baseUrl}/weather?lat={input.Latitude}&lon={input.Longitude}&appid={apiKey}&units={GetUnitString(input.Unit)}";
+                var result = api.GetAsync<CurrentWeather>(url).Result;
+                return result;
             }
         }
     }
