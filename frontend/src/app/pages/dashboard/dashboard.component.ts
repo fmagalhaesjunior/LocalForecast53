@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, ViewChild, OnInit } from '@angular/core';
 import { InputData } from 'src/app/models/input-data';
 import { ApiService } from 'src/app/services/api.service';
 import { GeolocationService } from 'src/app/services/geolocation.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class AppDashboardComponent implements OnInit {
   displayedColumns: string[] = ['datetime', 'temp', 'tempMin', 'tempMax'];
 
 
-  constructor(private apiService: ApiService, private geolocationService: GeolocationService) { }
+  constructor(private apiService: ApiService, 
+    private geolocationService: GeolocationService, 
+    private snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
     this.getCurrentLocation();
@@ -42,7 +45,7 @@ export class AppDashboardComponent implements OnInit {
         });
       })
       .catch(error => {
-        console.error('Erro ao obter localização atual.', error);
+        this.snackBarService.openSnackBar('Não foi possível carregar a previsão.', 'Ok', 'center', 'bottom', 'snack-style');
       });
   }
 }
