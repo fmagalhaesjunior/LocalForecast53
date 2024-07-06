@@ -39,7 +39,7 @@ namespace LocalForecast53.Application.Services
 
             //3. Persistir os dados no banco
             var history = _mapper.Map<CallHistory>(forecastInput);
-            history.SetResponseBody(forecastOutput);
+            history.SetResponseBody(currentWeather);
             _historyService.Add<CallHistory, CallHistoryValidator>(history);
 
             //4. Retornar Output

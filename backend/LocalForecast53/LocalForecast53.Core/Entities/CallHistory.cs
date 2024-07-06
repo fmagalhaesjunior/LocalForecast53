@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace LocalForecast53.Core.Entities
 {
     [Table("call_history")]
@@ -9,7 +10,9 @@ namespace LocalForecast53.Core.Entities
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
         public DateTime CallTime { get; private set; }
-        public string ResponseBody { get; private set; }  // Store as JSON string
+
+        [Column(TypeName = "jsonb")]
+        public object ResponseBody { get; private set; }
 
         public CallHistory() {}
 

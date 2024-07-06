@@ -12,7 +12,7 @@ namespace LocalForecast53.API.Controllers
                 var result = func();
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest("Erro interno do serviço.");
             }

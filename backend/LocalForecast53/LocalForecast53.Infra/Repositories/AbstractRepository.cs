@@ -19,7 +19,7 @@ namespace LocalForecast53.Infra.Repositories
                 return entityType.Name;
         }
 
-        protected string GetColumns(bool excludeKey = false)
+        protected string GetColumns(bool excludeKey = true)
         {
             var type = typeof(TEntity);
             var columns = string.Join(", ", type.GetProperties()
@@ -27,19 +27,24 @@ namespace LocalForecast53.Infra.Repositories
                 .Select(p =>
                 {
                     var columnAttr = p.GetCustomAttribute<ColumnAttribute>();
-                    return columnAttr != null ? columnAttr.Name : p.Name;
+                    return columnAttr != null && !string.IsNullOrEmpty(columnAttr.Name) ? columnAttr.Name : p.Name;
                 }));
 
             return columns;
         }
 
-        protected string GetPropertyNames(bool excludeKey = false)
+        protected string GetPropertyNames(bool excludeKey = true)
         {
             var properties = typeof(TEntity).GetProperties()
                 .Where(p => !excludeKey || p.GetCustomAttribute<KeyAttribute>() == null);
 
             var values = string.Join(", ", properties.Select(p =>
             {
+                var columnAttribute = p.GetCustomAttribute<ColumnAttribute>();
+                if (columnAttribute != null && columnAttribute.TypeName == "jsonb")
+                {
+                    return $"CAST(@{p.Name} AS jsonb)";
+                }
                 return $"@{p.Name}";
             }));
 
