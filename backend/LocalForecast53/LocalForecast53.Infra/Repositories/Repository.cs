@@ -105,7 +105,7 @@ namespace LocalForecast53.Infra.Repositories
                 string keyColumn = GetKeyColumnName();
                 string keyProperty = GetKeyPropertyName();
                 string query = $"DELETE FROM {tableName} WHERE {keyColumn} = @{keyProperty}";
-                rowsEffected = DbConnection.Execute(query, entity);
+                rowsEffected = DbConnection.Execute(query, entity.Id);
             }
             finally { DbConnection.Close(); }
         }
